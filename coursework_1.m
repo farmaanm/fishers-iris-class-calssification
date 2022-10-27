@@ -1,3 +1,5 @@
+clear clc
+
 % Loading fisheriris data
 load fisheriris.mat
 
@@ -16,6 +18,11 @@ trainTarget = species(dataset_1,:);
 testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
-% Construct a feedforward network- One layer - 10 Nodes
-net = feedforwardnet(10);
+% Construct a feedforward network with 5, 10, 15, 20 hidden layers
+net = feedforwardnet([5,10,15,20]);
+
+% Training the data
+net = train(net,trainData.',trainTarget.');
+view(net)
+
 
