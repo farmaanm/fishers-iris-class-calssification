@@ -1,8 +1,10 @@
 clear clc
 
-% Loading fisheriris data
+% Task 2.1
+% 1 - Loading fisheriris data
 load fisheriris.mat
 
+% 2 - Shuffling and seperating the dataset
 % Convert species to an index vector where 1, 2, 3 correspond to setosa, versicolor, virginica
 species = grp2idx(species);
 
@@ -18,11 +20,30 @@ trainTarget = species(dataset_1,:);
 testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
-% Construct a feedforward network with 5, 10, 15, 20 hidden layers
-net = feedforwardnet([5,10,15,20]);
+% Task 2.2
+% 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
 
-% Training the data
-net = train(net,trainData.',trainTarget.');
+% % Construct a feedforward network with 5, 10, 15, 20 hidden layers
+% net = feedforwardnet([5,10,15,20]);
+% 
+% % Training the data
+% net = train(net,trainData.',trainTarget.');
+% view(net)
+
+for n = [5, 10, 15, 20]
+    net = feedforwardnet(n);
+
+    for i = 1:10    
+        % Training the data
+        net = train(net, trainData.', trainTarget.');
+    end
+end
+
 view(net)
+
+% 4 - Testing the data
+predicted_output = net(testData.');
+perf = perform(net, predicted_output, testTarget.');
+
 
 
