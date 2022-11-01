@@ -1,4 +1,4 @@
-clear clc
+clc
 
 % Task 2.1
 % 1 - Loading fisheriris data
@@ -22,18 +22,9 @@ testTarget = species(dataset_2,:);
 
 % Task 2.2
 % 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
-
-% % Construct a feedforward network with 5, 10, 15, 20 hidden layers
-% net = feedforwardnet([5,10,15,20]);
-% 
-% % Training the data
-% net = train(net,trainData.',trainTarget.');
-% view(net)
-
 for n = [5, 10, 15, 20]
-    net = feedforwardnet(n);
-
-    for i = 1:10    
+    for i = 1:10
+        net = feedforwardnet(n);
         % Training the data
         net = train(net, trainData.', trainTarget.');
     end
@@ -45,5 +36,12 @@ view(net)
 predicted_output = net(testData.');
 perf = perform(net, predicted_output, testTarget.');
 
+x = round(predicted_output);
+perf2 = perform(net, x, testTarget.');
 
+
+% 5 - Plotting the data with gscatter
+gscatter(predicted_output, trainTarget)
+hold on
+%gscatter(testData, predicted_output)
 
