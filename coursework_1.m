@@ -1,7 +1,7 @@
-clc
+clear; close all; clc;
 
 % Task 2.1
-% 1 - Loading fisheriris data
+% 1 - Loading Fisher Iris dataset
 load fisheriris.mat
 
 % 2 - Shuffling and seperating the dataset
@@ -9,8 +9,8 @@ load fisheriris.mat
 species = grp2idx(species);
 
 % Shuffling a Vector, seperated in to unique values
-dataset_1 = randperm(150,(150*0.6))'; % Seperating 60% of the unique values
-dataset_2 = setdiff((1:150)',dataset_1); % Seperating the reamining 40%
+dataset_1 = randperm(150, (150*0.6))'; % Seperating 60% of the unique values
+dataset_2 = setdiff((1:150)', dataset_1); % Seperating the reamining 40%
 
 % Getting 60% for the training dataset
 trainData = meas(dataset_1,:);
@@ -20,11 +20,12 @@ trainTarget = species(dataset_1,:);
 testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
+
 % Task 2.2
 % 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
 for n = [5, 10, 15, 20]
+    net = feedforwardnet(n);
     for i = 1:10
-        net = feedforwardnet(n);
         % Training the data
         net = train(net, trainData.', trainTarget.');
     end
@@ -36,12 +37,13 @@ view(net)
 predicted_output = net(testData.');
 perf = perform(net, predicted_output, testTarget.');
 
-x = round(predicted_output);
-perf2 = perform(net, x, testTarget.');
-
+accuracy_check = (sum(round(predicted_output)==testTarget(:,end).')) * (100/size(testTarget,1));
 
 % 5 - Plotting the data with gscatter
-gscatter(predicted_output, trainTarget)
+gscatter(trainData, trainTarget)
 hold on
-%gscatter(testData, predicted_output)
+gscatter(testData, round(predicted_output.'))
+
+xlabel('Train/Test Data')
+ylabel('Train/Test Target')
 
