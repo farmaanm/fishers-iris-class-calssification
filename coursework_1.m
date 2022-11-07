@@ -4,13 +4,13 @@ clear; close all; clc;
 % 1 - Loading Fisher Iris dataset
 load fisheriris.mat
 
-% 2 - Shuffling and seperating the dataset
+% 2 - Shuffling and separating the dataset
 % Convert species to an index vector where 1, 2, 3 correspond to setosa, versicolor, virginica
 species = grp2idx(species);
 
-% Shuffling a Vector, seperated in to unique values
-dataset_1 = randperm(150, (150*0.6))'; % Seperating 60% of the unique values
-dataset_2 = setdiff((1:150)', dataset_1); % Seperating the reamining 40%
+% Shuffling a Vector, separated in to unique values
+dataset_1 = randperm(150, (150*0.6))'; % Separating 60% of the unique values
+dataset_2 = setdiff((1:150)', dataset_1); % Separating the remaining 40%
 
 % Getting 60% for the training dataset
 trainData = meas(dataset_1,:);
@@ -37,13 +37,14 @@ view(net)
 predicted_output = net(testData.');
 perf = perform(net, predicted_output, testTarget.');
 
-accuracy_check = (sum(round(predicted_output)==testTarget(:,end).')) * (100/size(testTarget,1));
+accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
 
 % 5 - Plotting the data with gscatter
-gscatter(trainData, trainTarget)
+gscatter(trainData, trainTarget, trainTarget, "rgb", "o")
 hold on
-gscatter(testData, round(predicted_output.'))
+gscatter(testData, round(predicted_output.'), testTarget, "rgb", "x")
 
+title('Scatter plot for before and after Classification')
 xlabel('Train/Test Data')
 ylabel('Train/Test Target')
 
