@@ -20,31 +20,38 @@ trainTarget = species(dataset_1,:);
 testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
-
 % Task 2.2
 % 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
 for n = [5, 10, 15, 20]
+
     net = feedforwardnet(n);
+    accuracy_array = [];
+
     for i = 1:10
+
         % Training the data
         net = train(net, trainData.', trainTarget.');
+
+        % 4 - Testing the data
+        predicted_output = net(testData.');
+        
+        accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
+
+        accuracy_array(end+1) = accuracy_check;
+
     end
+
+    average_accuracy = mean(accuracy_array);
+
 end
 
 view(net)
 
-% 4 - Testing the data
-predicted_output = net(testData.');
-perf = perform(net, predicted_output, testTarget.');
+% % 4 - Testing the data
+% predicted_output = net(testData.');
+% perf = perform(net, predicted_output, testTarget.');
+% 
+% accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
 
-accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
 
-% 5 - Plotting the data with gscatter
-gscatter(trainData, trainTarget, trainTarget, "rgb", "o")
-hold on
-gscatter(testData, round(predicted_output.'), testTarget, "rgb", "x")
-
-title('Scatter plot for before and after Classification')
-xlabel('Train/Test Data')
-ylabel('Train/Test Target')
 
