@@ -1,6 +1,6 @@
 clear; close all; clc;
 
-% Task 2.1
+%% Task 2.1
 % 1 - Loading Fisher Iris dataset
 load fisheriris.mat
 
@@ -20,11 +20,13 @@ trainTarget = species(dataset_1,:);
 testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
-% Task 2.2
+%% Task 2.2
 % 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
 for n = [5, 10, 15, 20]
 
     net = feedforwardnet(n);
+
+    % Initializing array to calculate mean accuracy of each hidden layer
     accuracy_array = [];
 
     for i = 1:10
@@ -35,23 +37,18 @@ for n = [5, 10, 15, 20]
         % 4 - Testing the data
         predicted_output = net(testData.');
         
+        % Calculating accuracy of net in percentage
         accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
 
+        % Appending accuracy to the array
         accuracy_array(end+1) = accuracy_check;
 
     end
 
+    % Calculating mean accuracy of each hidden layer
     average_accuracy = mean(accuracy_array);
 
 end
 
 view(net)
-
-% % 4 - Testing the data
-% predicted_output = net(testData.');
-% perf = perform(net, predicted_output, testTarget.');
-% 
-% accuracy_check = (sum(round(predicted_output) == testTarget(:,end).')) * (100/size(testTarget,1));
-
-
 
