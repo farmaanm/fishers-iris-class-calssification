@@ -47,8 +47,7 @@ for n = [5, 10, 15, 20]
 
     % Calculating mean accuracy of each hidden layer
     average_accuracy = mean(accuracy_array);
-
+    view(net)
 end
 
-view(net)
 
