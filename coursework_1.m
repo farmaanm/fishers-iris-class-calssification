@@ -5,7 +5,7 @@ clear; close all; clc;
 load fisheriris.mat
 
 % 2 - Shuffling and separating the dataset
-% Convert species to an index vector where 1, 2, 3 correspond to setosa, versicolor, virginica
+% Convert species to an index vector denoting setosa, versicolor, virginica as 1, 2, 3
 species = grp2idx(species);
 
 % Shuffling a Vector, separated in to unique values
