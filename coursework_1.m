@@ -21,6 +21,10 @@ testData = meas(dataset_2,:);
 testTarget = species(dataset_2,:);
 
 %% Task 2.2
+
+% Initializing array to store accuracy of each hidden layer
+hidden_layer_accuracy = [];
+
 % 1, 2, 3 - Construct a feedforward network with 5, 10, 15, 20 hidden layers
 for n = [5, 10, 15, 20]
 
@@ -47,6 +51,10 @@ for n = [5, 10, 15, 20]
 
     % Calculating mean accuracy of each hidden layer
     average_accuracy = mean(accuracy_array);
+
+    % Accuracy of each hidden layer
+    hidden_layer_accuracy(end+1) = average_accuracy;
+
     view(net)
 end
 
